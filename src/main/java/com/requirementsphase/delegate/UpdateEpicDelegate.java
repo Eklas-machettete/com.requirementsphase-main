@@ -28,6 +28,8 @@ public class UpdateEpicDelegate implements JavaDelegate {
 	private String jiraHost;
 	@Value("${jira.projectKey}")
 	private String projectKey;
+	@Value("${reporter.id}")
+	String reporterId;
 	
 	public void execute(DelegateExecution execution) throws Exception {
 
@@ -37,10 +39,12 @@ public class UpdateEpicDelegate implements JavaDelegate {
 		String name=(String)execution.getVariable("nameProposal");
 		String priority=(String)execution.getVariable("priorityProposal");
 		String tags=(String)execution.getVariable("tagsProposal");
+		
+		execution.setVariable("reportProposal", reporterId);
 		String reporter=(String)execution.getVariable("reportProposal");
-        RestTemplate restTemplate = new RestTemplate();
-
-		String url = jiraHost+"createIssue";
+		System.out.println(reporter);
+		RestTemplate restTemplate = new RestTemplate();
+        String url = jiraHost+"createIssue";
 		System.out.println(url);
 		String requestJson = "{\"fields\":{\"project\":{\"key\":\""+projectKey+ "\"},\"summary\":\""+summary+"\",\"customfield_10011\":\""+name+"\",\"priority\":{\"name\":\""+priority+"\"},\"labels\":[\""+tags+"\"],\"reporter\":{\"id\":\""+reporter+"\"},\"description\":{\"type\":\"doc\",\"version\":1,\"content\":[{\"type\":\"paragraph\",\"content\":[{\"type\":\"text\",\"text\":\""+description+"\"}]}]},\"issuetype\":{\"name\":\"Epic\"}}}";
         HttpHeaders headers = new HttpHeaders();

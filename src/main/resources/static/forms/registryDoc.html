@@ -1,3 +1,4 @@
+
 <div class="text-center">
 	<strong>Registro de Documentacion</strong>
 </div>
@@ -35,21 +36,28 @@
   <div class="form-group">
     <label class="control-label">Quien lo reporta</label>
     <div class="controls">
-      <input type="text" 
-      		 cam-variable-name="reportDocRegistry"
-      		 cam-variable-type="String"
-      		 class="form-control" />
-    </div>
+      	<select  cam-variable-name="reportDocRegistry" cam-variable-type="String" class="form-control">
+             <option value="">unknown</option>
+           
+           
+        </select>
+      	 </div>
   </div>
   
   <div class="form-group">
     <label class="control-label">Prioridad</label>
     <div class="controls">
-      <input type="text" 
-      		 cam-variable-name="priorityDocRegistry"
-      		 cam-variable-type="String"
-      		 class="form-control" />
-    </div>
+
+          
+        <select  cam-variable-name="priorityDocRegistry" cam-variable-type="String" class="form-control">
+             <option value="Highest">Highest</option>
+             <option value="High">High</option>
+             <option value="Medium">Medium</option>
+             <option value="Low">Low</option>
+              <option value="Lowest">Lowest</option>
+        </select>
+
+ </div>
   </div>
   
   <div class="form-group">
@@ -65,3 +73,4 @@
   <script cam-script type="text/form-script">
   </script>
 </form>
+

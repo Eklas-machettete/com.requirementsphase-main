@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_086seoo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.4.0">
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:bioc="http://bpmn.io/schema/bpmn/biocolor/1.0" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_086seoo" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="4.6.0">
   <bpmn:collaboration id="requiriments_phase">
     <bpmn:participant id="Participant_1n3evcf" name="FASE DE REQUISITOS" processRef="start_requirements_phase" />
     <bpmn:group id="Group_0vwdrmh" categoryValueRef="CategoryValue_0qouplh" />
@@ -17,12 +17,12 @@
       <bpmn:lane id="Lane_17uq1q2" name="Comite de Arquitectura">
         <bpmn:flowNodeRef>Activity_1p6ntdo</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1283gtb</bpmn:flowNodeRef>
-        <bpmn:flowNodeRef>Activity_0egaqrv</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Gateway_07ly317</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Activity_1h2ljyr</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_0dqnrib</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>send_email_for_meeting</bpmn:flowNodeRef>
         <bpmn:flowNodeRef>Event_05fbbj2</bpmn:flowNodeRef>
+        <bpmn:flowNodeRef>Activity_0egaqrv</bpmn:flowNodeRef>
       </bpmn:lane>
       <bpmn:lane id="Lane_143iqpy" name="Product Manager">
         <bpmn:flowNodeRef>Activity_0j4nfi1</bpmn:flowNodeRef>
@@ -54,7 +54,6 @@ Incidencias asociadas que serían las historias y las tareas</bpmn:documentation
       <bpmn:outgoing>Flow_1tv2v66</bpmn:outgoing>
     </bpmn:userTask>
     <bpmn:sequenceFlow id="Flow_17oysi3" sourceRef="Activity_0egaqrv" targetRef="Event_0dqnrib" />
-    <bpmn:sequenceFlow id="Flow_1dz3y6v" sourceRef="Activity_1283gtb" targetRef="Activity_0egaqrv" />
     <bpmn:sequenceFlow id="Flow_02u0os2" sourceRef="Activity_1p6ntdo" targetRef="Activity_1283gtb" />
     <bpmn:sequenceFlow id="Flow_1skugbv" sourceRef="Activity_00ao3xu" targetRef="Activity_0j4nfi1" />
     <bpmn:sequenceFlow id="Flow_0v1ekgn" name="No Aprobado" sourceRef="Gateway_07ly317" targetRef="Activity_00ao3xu">
@@ -114,11 +113,6 @@ Fase 2. Se asocia microservicio para conectar con Google Calendar</bpmn:document
       <bpmn:incoming>Flow_0v1ekgn</bpmn:incoming>
       <bpmn:outgoing>Flow_1skugbv</bpmn:outgoing>
     </bpmn:manualTask>
-    <bpmn:serviceTask id="Activity_0egaqrv" name="Almacenar  Documentacion" camunda:delegateExpression="#{storeDocs}">
-      <bpmn:documentation>Se almacena el archivo de documentacion para referencias</bpmn:documentation>
-      <bpmn:incoming>Flow_1dz3y6v</bpmn:incoming>
-      <bpmn:outgoing>Flow_17oysi3</bpmn:outgoing>
-    </bpmn:serviceTask>
     <bpmn:userTask id="Activity_1283gtb" name="Registro de Documentacion" camunda:formKey="embedded:app:forms/registryDoc.html" camunda:assignee="demo">
       <bpmn:documentation>El miembro de comite designado registra el archivo de documentacion.
 
@@ -156,6 +150,12 @@ Etiquetas</bpmn:documentation>
       <bpmn:outgoing>Flow_00gsvum</bpmn:outgoing>
       <bpmn:messageEventDefinition id="MessageEventDefinition_02xunpx" />
     </bpmn:intermediateThrowEvent>
+    <bpmn:sequenceFlow id="Flow_1dz3y6v" sourceRef="Activity_1283gtb" targetRef="Activity_0egaqrv" />
+    <bpmn:serviceTask id="Activity_0egaqrv" name="Almacenar  Documentacion" camunda:delegateExpression="#{storeDocs}">
+      <bpmn:documentation>Se almacena el archivo de documentacion para referencias</bpmn:documentation>
+      <bpmn:incoming>Flow_1dz3y6v</bpmn:incoming>
+      <bpmn:outgoing>Flow_17oysi3</bpmn:outgoing>
+    </bpmn:serviceTask>
     <bpmn:textAnnotation id="TextAnnotation_1w6q9qm">
       <bpmn:text>Un proyecto se inicia luego de recibir un llamado de accion con una idea para desarrollar</bpmn:text>
     </bpmn:textAnnotation>
@@ -164,7 +164,6 @@ Etiquetas</bpmn:documentation>
       <bpmn:text>Si no se aprueba por lo documentado en el registro se deberá de añadir una justificación</bpmn:text>
     </bpmn:textAnnotation>
     <bpmn:association id="Association_09nqba2" sourceRef="Activity_1h2ljyr" targetRef="TextAnnotation_0wvguwi" />
-    <bpmn:association id="Association_1s4le1x" sourceRef="Activity_0egaqrv" targetRef="TextAnnotation_0juza4a" />
     <bpmn:textAnnotation id="TextAnnotation_0juza4a">
       <bpmn:text>Se registra en Jira y base de datos la información de la incidencia épica y de las historias de usuario.</bpmn:text>
     </bpmn:textAnnotation>
@@ -172,6 +171,7 @@ Etiquetas</bpmn:documentation>
     <bpmn:textAnnotation id="TextAnnotation_0fbe8ks">
       <bpmn:text>Se asocian las historias de usuario donde se especifica modularmente que es lo que desde la perspectiva de negocio debería de soportar cada componente.</bpmn:text>
     </bpmn:textAnnotation>
+    <bpmn:association id="Association_1s4le1x" sourceRef="Activity_0egaqrv" targetRef="TextAnnotation_0juza4a" />
   </bpmn:process>
   <bpmn:category id="Category_0ilhs8j">
     <bpmn:categoryValue id="CategoryValue_0qouplh" />
@@ -228,7 +228,7 @@ Etiquetas</bpmn:documentation>
         <di:waypoint x="1155" y="495" />
         <di:waypoint x="1276" y="495" />
         <bpmndi:BPMNLabel>
-          <dc:Bounds x="1176" y="477" width="47" height="14" />
+          <dc:Bounds x="1176" y="477" width="48" height="14" />
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge id="Flow_0v1ekgn_di" bpmnElement="Flow_0v1ekgn">
